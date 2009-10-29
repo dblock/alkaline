@@ -1,0 +1,25 @@
+CLASS = ../../obj
+SOURCES=$(shell ls *.cpp)
+TARGETS=$(addprefix $(CLASS)/,$(subst cpp,o,$(SOURCES)))
+TARGETS_CLEAN=$(addprefix $(CLASS)/,$(subst cpp,clean,$(SOURCES)))
+INCLUDES=-I ./ -I ../ -I ../../../BaseClasses/ -I $(HOME)/include -I /usr/pkg/include
+ifneq (,$(findstring debug,$(MAKECMDGOALS)))
+ DEBUG_CFLAGS=-g -ggdb
+else
+ DEBUG_CFLAGS=
+endif
+
+all debug nostrip static: $(TARGETS)	
+
+clean: $(TARGETS_CLEAN) $(TARGETS)
+
+$(CLASS)/%.o : %.cpp	
+	-@mkdir -p $(CLASS)
+	@GCC@ -c $(DEBUG_CFLAGS) -D_OS_@BASEOS@ @DEFS@ @CPPFLAGS@ $(INCLUDES) $< -o $@ 
+
+$(CLASS)/%.clean:
+	-@touch $(subst clean,o,$@)
+	-@rm $(subst clean,o,$@)
+
+
+

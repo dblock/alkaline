@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <link rel="stylesheet" href="../images/index.css" type="text/css">
+    <title>Alkaline Search Engine</title>        
+  </head>  
+  <body bgcolor="white">          
+	    
+    <table width="100%" cellpadding="5">
+      <tr>
+        <td align="left" bgcolor="#FFCC66">
+	  <font size="1"><b>Alkaline Demo, search</b></font><br>		  
+	  
+	  <form action="search.html" method="post">		  		 	    
+	  <input type="text" name="search" size="20">
+	  <input type="submit" value="Search">
+          
+	  <font size="1">show: 
+            <select name="quant">
+	    <!--SEARCH-GENERAL
+              <option £post.quant|[IS10]~[selected] value="10">10</option>
+              <option £post.quant|[IS20]~[selected] value="20">20</option>
+              <option £post.quant|[IS-1]~[selected] value="-1">All</option>
+	      -->
+            </select>
+            results</font>    
+	</td>	
+      </tr>
+      <tr>
+        <td align="left" bgcolor="#FFCC66">
+	  <font size="1">
+	    <br>
+	    <!--SEARCH-GENERAL
+
+	    <input type="checkbox" name="other" value="opt:and" 
+	     £post.other|[HASopt:and]~[checked]
+             £post.search|[HASopt:and]~[checked]> match all terms</input>
+
+	    <input type="checkbox" name="other" value="opt:case"
+	     £post.other|[HASopt:case]~[checked]
+	     £post.search|[HASopt:case]~[checked]> case sensitive</input>		  
+
+	    <br>
+	    <input type="checkbox" name="other" value="opt:whole"
+	     £post.other|[HASopt:whole]~[checked]
+	     £post.search|[HASopt:whole]~[checked]> whole words only</input>
+
+	    <input type="checkbox" name="hidesum" value="on" 
+	     £post.hidesum~[checked]> hide summaries</input>
+	    -->
+	  </font>	
+        </td>
+    </form>
+      <tr>
+	<td bgcolor="#FFCC66" align="right">
+	  <font size="1">
+	    <!--SEARCH-GENERAL <b>Alkaline</b> has found $total page(s) in $time seconds
+	    £total|[NOT0]~[
+	  <br>		  
+	    sort results:
+	    [<a href="$sort.£post.hidesum~[+hidesum=$post.hidesum]+quant$post.quant">relevance</a>]
+	    [<a href="$sort.idate£post.hidesum~[+hidesum=$post.hidesum]+quant$post.quant">date</a>]
+	    [<a href="$sort.title£post.hidesum~[+hidesum=$post.hidesum]+quant$post.quant">title</a>]
+	    [<a href="$sort.size£post.hidesum~[+hidesum=$post.hidesum]+quant$post.quant">size</a>]
+	    [<a href="$sort.url£post.hidesum~[+hidesum=$post.hidesum]+quant$post.quant">url</a>]<br>
+	    ]
+	    -->		  
+	    <!--SEARCH-NEXT-->
+      <br>
+	  </font>
+	</td>
+      </tr>
+      <tr>
+	<td bgcolor="white" colspan="2">
+	  <hr>
+	  <!--SEARCH-GENERAL $query~[Searching for <b>]#[</b>.]^[Nothing to search.]<br>-->
+	  <!--SEARCH-RESULTS-->
+	</td></tr>
+    </table>
+    
+    <hr noshade>
+    <table align="center">
+      <tr>
+	<td colspan="2" align="center">
+	  <font size="1">	    
+            Alkaline Search Engine
+	    &copy; <a target="_new" href="http://www.vestris.com">Vestris Inc</a>.<br>1994-2002 -
+	    Switzerland - All Rights Reserved
+	  </font>
+	</td>
+    </table>   	    	    	    
+  </td>
+  </tr>
+  </table>
+  </body>
+</html>
+
+<!--SET MAP--
+   <dl><dt> 
+   <a href="$url" target="_new"><b>$hltitle</b></a> $quality%
+   <dd>   
+   <font size="1">$hlheader ... <br><font color="gray">$size bytes; modified: $modif</font>
+   <br>url: <a href="$url" target="_new">$url</a>    
+   </font>
+  ]
+  </dl>-->
+<!--SET SEARCH-NORESULTS--Sorry, no results.<br>Maybe you should check the <a target="_new" href="http://www.vestris.com/alkaline/tips.html">Search Tips</a>.<br><font size="1">Note that this search engine searches in the Vestris Inc. site only and not all the Internet.</font><hr noshade>-->
+<!--SET PREV--<img src="../images/prev.gif" width=50 height=15 border=0 align="absbottom">-->
+<!--SET NEXT--<img src="../images/next.gif" width=50 height=15 border=0 align="absbottom">-->
+<!--SET C-BEFORE--<b><font color="red">-->
+<!--SET C-AFTER--</b></font>-->
+<!--SET N-BEFORE--<b>-->
+<!--SET N-AFTER--</b>-->
+<!--SET RECENT-COUNT--3-->
+<!--SET NEXT-INHERIT--£post.hidesum~[+hidesum=$post.hidesum]-->
+<!--SET HIGHLIGHT-OPEN--<font color="red">-->
+<!--SET HIGHLIGHT-CLOSE--</font>-->

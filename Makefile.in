@@ -1,0 +1,107 @@
+DIRS = ASearch/AlkalineData ASearch/Cache ASearch/Config ASearch/Site ASearch/Index ASearch/AlkalineParser \
+	ASearch/Session ASearch/AlkalineSession ASearch/Mv4 \
+	ASearch/AlkalineServer ASearch/StringA ASearch/Search ASearch/Main \
+	ASearch/Letter ASearch/LettersTree ASearch/Sort ASearch/Rank ASearch/LettersHandler 
+PWD = $(shell pwd)
+LIBS = -L$(HOME)/lib -L./ @LIBS@
+STATIC_LIBS = @STATIC_LIBS@ 
+ifeq "@STATIC_LIBS@" ""
+STATIC_LIBS = ../BaseClasses/obj/*
+endif
+OBJ = obj
+BIN = bin
+PROG = $(BIN)/asearch.@BASEOS@
+CURDIR = $(shell pwd)
+CVS = :pserver:$(USER)@cvs.vestris.com:/home/cvs/vestris
+TAR = tar
+GUNZIP = gunzip
+VERSIONHPP =  ASearch/Main/bldver.hpp
+VERSIONMAJOR = $(shell cat $(VERSIONHPP) | grep "define RC_VERSION_MAJOR" | sed -e 's/[^0-9]//g')
+VERSIONMINOR = $(shell cat $(VERSIONHPP) | grep "define RC_VERSION_MINOR" | sed -e 's/[^0-9]//g')
+VERSION = $(VERSIONMAJOR).$(VERSIONMINOR)
+TARGETEXT = $(VERSION).@BASEOS@-@BASEPROC@
+TDIR = asearch.$(VERSION)
+DOC = README CONTRIBUTIONS COPYRIGHT
+TOOLSLINKS = lnxdump mrtgstats ndxscan urtlist
+BINLINKS = asearch
+TARGETTAR = asearch.$(VERSION).@BASEOS@-@BASEPROC@.tar
+
+all debug:
+	@for I in $(DIRS); do cd $(PWD)/$$I; @MAKE@ -f ../../Makefile.each $@ || exit 1; cd $(PWD); done	
+	-@mkdir $(BIN)
+	@GCC@ -D_OS_@BASEOS@ @DEFS@ @CPPFLAGS@ $(INCLUDES) $(LIBS) $(OBJ)/* -o $(PROG) $(STATIC_LIBS)
+	@if test $@ = all; then echo "make: strip $(PROG)" ; strip $(PROG); fi
+
+clean: cleanup all
+
+cleanup:
+	-@rm $(OBJ)/*
+
+distrib: release
+
+release: all
+	cd $(BIN); @MAKE@ ; cd $(PWD);
+
+static:
+	@for I in $(DIRS); do cd $(PWD)/$$I; @MAKE@ -f ../../Makefile.each $@ || exit 1; cd $(PWD); done
+	-@mkdir $(BIN)
+	-@rm ../BaseClasses/obj/Email.o
+	-@rm ../BaseClasses/obj/EmailEx.o
+	-@rm ../BaseClasses/obj/PmdfEmail.o
+	@GCC@ -D_OS_@BASEOS@ @DEFS@ @CPPFLAGS@ $(INCLUDES) $(LIBS) $(OBJ)/* -o $(PROG) ../BaseClasses/obj/*
+	strip $(PROG);
+
+
+# build the entire Alkaline package
+
+%.cvs:
+	@echo cvs: checking $*
+	@if [ ! -d ../$* ]; then cd ../ ; cvs -d $(CVS) checkout $*; fi
+	@if [ ! -d ../$* ]; then echo "error: please checkout $* manually"; exit 1; fi
+	@echo cvs: updating $*
+	cd ../$* ; cvs update -P -d
+
+%.mak:
+	@echo build: making $*
+	@if [ -f ../$*/config.cache ]; then rm -f ../$*/config.cache; fi
+	@cd ../$* ; ./configure --prefix=$(HOME) ; @MAKE@ clean
+	@if [ -s ../$*/bin/Makefile ]; then cd ../$*/bin ; @MAKE@; fi
+
+cvs: BaseClasses.cvs Alkaline.cvs AlkalineTools.cvs SgmlDocs.cvs
+
+mak: BaseClasses.mak Alkaline.mak AlkalineTools.mak
+
+everything: cvs mak package
+
+package:
+	@echo $@: checking $(TDIR)
+	@if [ -d $(TDIR) ]; then rm -rf $(TDIR); fi
+
+	@echo $@: extracting server package
+	@$(GUNZIP) bin/asearch.$(TARGETEXT).tar ; $(TAR) vfx bin/asearch.$(TARGETEXT).tar
+	@mkdir $(TDIR)/bin ; mv $(TDIR)/asearch.@BASEOS@ $(TDIR)/bin	
+
+	@echo $@: extracting tools package
+	@cd $(TDIR) ; $(GUNZIP) ../../AlkalineTools/bin/AlkalineTools.$(TARGETEXT).tar.gz ; tar vfx ../../AlkalineTools/bin/AlkalineTools.$(TARGETEXT).tar ; mv AlkalineTools.$(VERSION) tools
+	@for I in $(DOC); do rm -f $(TDIR)/tools/$$I; done
+	cd $(TDIR)/tools/Perl/PerlTools ; ln -s ../Alkaline/Server Alkaline
+
+	@echo $@: extracting documentation package
+	@cd $(TDIR) ; unzip ../../SgmlDocs/alkaline/alkaline-distrib.zip ; mv alkaline-distrib docs
+
+	@echo $@: extracting faq package
+	@cd $(TDIR) ; unzip ../../SgmlDocs/alkaline-faq/alkaline-faq-distrib.zip ; mv alkaline-faq-distrib faqs
+
+	@echo $@: creating links
+	@chmod -R 755 $(TDIR)
+	@for I in $(TOOLSLINKS); do ln -s ../tools/$$I.@BASEOS@ $(TDIR)/bin/$$I; done
+#	@for I in $(TOOLSLINKS); do ln -s tools/$$I.@BASEOS@ $(TDIR)/$$I; done
+	@for I in $(BINLINKS); do ln -s $$I.@BASEOS@ $(TDIR)/bin/$$I; done
+	@for I in $(BINLINKS); do ln -s bin/$$I.@BASEOS@ $(TDIR)/$$I; done
+
+	@echo $@: creating package
+	@if [ -f $(TARGETTAR).gz ]; then rm -f $(TARGETTAR).gz; fi
+	$(TAR) vfc $(TARGETTAR) $(TDIR)/*	
+	gzip $(TARGETTAR)
+
+	@echo $@: done $(TARGETTAR).gz

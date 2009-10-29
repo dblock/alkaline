@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN"
+"http://www.wapforum.org/DTD/wml_1.1.xml">
+
+<wml>
+
+  <card id="results" title="Search Results">
+   <p>
+    Alkaline Search Engine | Server Parameters | Configurations | 
+    <!--SEARCH-GENERAL $post.searchconfig --> | <b>WAP Search</b><br/>
+    <!--SEARCH-GENERAL Searching <b>$query</b>, Alkaline has found $total page(s) in $time seconds, showing $quant results.--><br/>
+    <!--SEARCH-RESULTS-->    
+   </p>
+  </card>   
+  <!--SET MAP--    
+    <br/>[ <a href="#res$index">next</a> ]
+    <br/>[ <a href="as_configs_search.wml">search again</a> ]
+   </p>
+  </card>
+  <card id="res$index" title="$title">
+   <p>
+    <do name="back" type="prev" label="back">
+      <prev/>
+    </do>
+    <do name="link" type="accept" label="$url">
+     <go href="$url"/>
+    </do>
+    <a href="$url">$title</a><br/>
+    <small>$header ...</small>
+    <br/>
+    size: <b>$size</b> bytes<br/>
+    modified: <b>$modif</b><br/>
+    relevance: <b>$quality</b>%<br/>    
+  --> 
+  <!--SET SEARCH-NORESULTS--<b>No results found.</b>-->
+
+</wml>
+
+

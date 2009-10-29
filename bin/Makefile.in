@@ -1,0 +1,34 @@
+TAR = tar
+GZIP = gzip
+BIN = asearch.@BASEOS@ 
+DOC = README CONTRIBUTIONS COPYRIGHT
+VERSIONHPP =  ../ASearch/Main/bldver.hpp
+VERSIONMAJOR = $(shell cat $(VERSIONHPP) | grep "define RC_VERSION_MAJOR" | sed -e 's/[^0-9]//g')
+VERSIONMINOR = $(shell cat $(VERSIONHPP) | grep "define RC_VERSION_MINOR" | sed -e 's/[^0-9]//g')
+VERSION = $(VERSIONMAJOR).$(VERSIONMINOR)
+TARGET = asearch.$(VERSION).@BASEOS@-@BASEPROC@.tar
+TDIR = asearch.$(VERSION)
+COPY = cp
+MKDIR = mkdir -p
+RM = rm
+RMR = $(RM) -r
+CHMOD = chmod
+MV = mv
+
+all:
+	-$(MKDIR) $(TDIR)
+	@for I in $(DOC); do $(COPY) $$I $(TDIR); done
+	-$(MKDIR) $(TDIR)/admin
+	$(COPY) -r ../Admin/* $(TDIR)/admin
+	-$(MKDIR) $(TDIR)/demos
+	$(COPY) -r ../demos/* $(TDIR)/demos
+	$(MV) $(TDIR)/demos/global.cnf $(TDIR)
+	-$(CHMOD) -R 755 $(TDIR)/admin $(TDIR)/demos
+	cd $(TDIR)/admin ; find . -name "CVS" | xargs $(RMR) ; $(RMR) as-images-src ; cd ../..
+	cd $(TDIR)/demos ; find . -name "CVS" | xargs $(RMR) ; cd ../..
+	$(COPY) $(BIN) $(TDIR)
+	-$(RM) $(TARGET).gz
+	$(TAR) vfc $(TARGET) $(TDIR)/*
+	$(GZIP) $(TARGET)
+	-$(RMR) $(TDIR)
+

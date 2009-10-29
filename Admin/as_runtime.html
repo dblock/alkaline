@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" type="text/css"> 
+    <title>Alkaline Search Engine Administration - Runtime</title>
+  </head>
+
+  <script type="text/javascript" src="xparse.js"></script>
+  
+  <body bgcolor="#FFFFFF">
+    Alkaline Search Engine | Server Operations | <b>Runtime</b>
+    <hr size="1">
+   
+    <script>
+      ASShowReponseXml("$serverresponsexml");
+ 
+      var XString = new String("$serverxml");
+      var XParsedObject = new Array();
+      XParsedObject = Xparse(XString);
+      
+      // server counters
+      var ServerCountersStr = new String();
+      ServerCountersStr += "Server Date:/server/date;";
+      ServerCountersStr += "System:/system/uts/descr;";
+      ServerCountersStr += "Node:/system/uts/node;";
+      XParseShowTable("Alkaline Search Engine Server", ServerCountersStr, XParsedObject);
+      
+      // restart Alkaline
+ 
+      XParseShowTable("System Actions", "", XParsedObject);
+      var bRestartServer = parseInt(XParseGetValue("/server/restart", XParsedObject));
+      if (bRestartServer == 1) {
+        document.writeln("<blockquote><form action='" + document.URL + "' method=post>");
+        document.writeln("  <input name=action type=hidden value=restart>");
+        document.writeln("  <input name=submit value='Restart Alkaline' type=submit>");
+        document.writeln("</form></blockquote>");
+      } else {
+        document.writeln("<blockquote>The server cannot be restarted from the Administration pages.");
+        document.writeln("It is either running as a daemon or under Windows NT.</blockquote>");
+      }
+
+      // shutdown server
+      document.writeln("<blockquote><form action='" + document.URL + "' method=post>");
+      document.writeln("  <input name=action type=hidden value=shutdown>");
+      document.writeln("  <input name=submit value='Shutdown Alkaline' type=submit>");
+      document.writeln("</form></blockquote>");
+    
+      // reload indexes
+      document.writeln("<blockquote><form action='" + document.URL + "' method=post>");
+      document.writeln("  <input name=config type=hidden value=''>");
+      document.writeln("  <input name=action type=hidden value=reloadindex>");
+      document.writeln("  <input name=submit value='Reload All Indexes' type=submit>");
+      document.writeln("</form></blockquote>");
+
+      // refresh template
+ 
+      XParseShowTable("Refresh Template", "", XParsedObject);
+      var TString = new String("$tmplcachexml");
+      var TParsedObject = new Array();
+      TParsedObject = Xparse(TString);
+
+      var TCount = parseInt(XParseGetValue("/templates/size", TParsedObject));
+      if (TCount > 0) { 
+         document.writeln("<blockquote><form action='" + document.URL + "' method=post>");
+         document.writeln("  <input name=action type=hidden value=refresh><select name=template>"); 
+         for (var t = 0; t < TCount; t++) {
+            var TTemplate = new String(XParseGetValue("/templates/" + t, TParsedObject));
+            document.writeln("  <option value=" + TTemplate + ">" + TTemplate + "</option>");
+         }
+         document.writeln("  </select>&nbsp;<input name=submit value='Refresh Template' type=submit>");
+         document.writeln("</form></blockquote>");
+      } else {
+        document.writeln("<blockquote>No templates are currently in the server cache.");
+        document.writeln("A template is cached when the first search operation using it is performed.</blockquote>");          
+      }
+  </script>
+    <hr>    
+ 
+  </body>
+</html>

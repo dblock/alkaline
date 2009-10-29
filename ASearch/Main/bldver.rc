@@ -1,0 +1,40 @@
+#include <winver.h>
+#include <bldver.hpp>
+
+VS_VERSION_INFO                       VERSIONINFO
+
+FILEFLAGSMASK                         0x3fL
+#ifdef DEBUG
+  FILEFLAGS                           0x1L
+#else
+  FILEFLAGS                           0x0L
+#endif
+
+FILEVERSION                           RC_VERSION
+PRODUCTVERSION                        RC_VERSION
+
+FILEOS                                0x4L
+FILETYPE                              0x1L
+FILESUBTYPE                           0x0L
+BEGIN
+  BLOCK                               "StringFileInfo"
+  BEGIN
+    BLOCK                             "040904b0"
+    BEGIN
+      VALUE "CompanyName",            "Vestris Inc. http://www.vestris.com/\0"
+      VALUE "FileDescription",        RC_VERSION_FILE_DESCRIPTION
+      VALUE "InternalName",           RC_VERSION_INTERNAL_NAME
+      VALUE "LegalCopyright",         "Copyright \251 1994-2001 Vestris Inc.\0"
+      VALUE "OriginalFilename",       RC_VERSION_ORIGINAL_FILE_NAME
+      VALUE "ProductName",            RC_VERSION_PRODUCT_NAME
+      VALUE "FileVersion",            RC_VERSION_STRING
+      VALUE "ProductVersion",         RC_VERSION_STRING
+    END
+  END
+  BLOCK                               "VarFileInfo"
+  BEGIN
+    VALUE                             "Translation", 0x409, 1200
+  END
+END
+
+IDI_ICON ICON DISCARDABLE             "icon.ico"

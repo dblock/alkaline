@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+    
+ <head>
+
+    <script language="JavaScript">      
+      <!--
+      var fMtmCodeLoaded = false;
+      var fAsMenuCnfLoaded = false;
+      var fMenuLoaded = false;
+      //-->
+    </script>
+
+    <script language="JavaScript" src="xparse.js"></script>
+    <script language="JavaScript" src="mtmcode.js"></script>
+    <script language="JavaScript" src="as_menucnf.js"></script>
+    
+    <title>Alkaline Search Engine</title>
+    
+  </head>
+  <body bgcolor="#FFFFFF">
+    <script language="javascript">
+      // Morten's JavaScript Tree Menu
+      // written by Morten Wang (morten@treemenu.com) (c) 1998-2000
+      // This is version 2.2.5, dated 2000-03-05
+      
+      // The script is freely distributable
+      // It may be used (and modified) as you wish, but retain this message
+      // For more information about the menu visit its home page
+      // http://www.treemenu.com/
+      
+      // Menu table width, either a pixel-value (number) or a percentage value.
+      var MTMTableWidth = "100%";
+      
+      // Name of the frame where the menu is to appear.
+      var MTMenuFrame = "menu";
+      
+      // variable for determining whether a sub-menu always gets a plus-sign
+      // regardless of whether it holds another sub-menu or not
+      var MTMSubsGetPlus = true;
+      
+      // variable that defines whether the menu emulates the behaviour of
+      // Windows Explorer
+      var MTMEmulateWE = false;
+      
+      // Directory of menu images/icons
+      var MTMenuImageDirectory = "menu-images/";
+      
+      // Variables for controlling colors in the menu document.
+      // Regular BODY atttributes as in HTML documents.
+      var MTMBGColor = "#FFFFFF";
+      var MTMBackground = "background.gif";
+      var MTMTextColor = "#FFFFFF";
+      
+      // color for all menu items
+      var MTMLinkColor = "#0000FF";
+      
+      // Hover color, when the mouse is over a menu link
+      var MTMAhoverColor = "#0000AA";
+      
+      // Foreground color for the tracking & clicked submenu item
+      var MTMTrackColor ="#000000";
+      var MTMSubExpandColor = "#000000";
+      var MTMSubClosedColor = "#000000";
+      
+      // All options regarding the root text and it's icon
+      var MTMRootIcon = "menu_new_root.gif";
+      var MTMenuText = "Alkaline Search Engine";
+      var MTMRootColor = "#0000FF";
+      var MTMRootFont = "Arial, Helvetica, sans-serif";
+      var MTMRootCSSize = "84%";
+      var MTMRootFontSize = "-1";
+  
+      // Font for menu items.
+      var MTMenuFont = "Arial, Helvetica, sans-serif";
+      var MTMenuCSSize = "84%";
+      var MTMenuFontSize = "-1";
+      
+      // Variables for style sheet usage
+      // 'true' means use a linked style sheet.
+      var MTMLinkedSS = false;
+      var MTMSSHREF = "style.css";
+      
+      // Whether you want an open sub-menu to close automagically
+      // when another sub-menu is opened.  'true' means auto-close
+      var MTMSubsAutoClose = false;
+      
+      // This variable controls how long it will take for the menu
+      // to appear if the tracking code in the content frame has
+      // failed to display the menu. Number if in tenths of a second
+      // (1/10) so 10 means "wait 1 second".
+      var MTMTimeOut = 15;
+      
+      /******************************************************************************
+      * User-configurable list of icons.                *
+      ******************************************************************************/
+
+      if (fMtmCodeLoaded) {      
+      
+      var MTMIconList = null;
+      MTMIconList = new IconList();
+      MTMIconList.addIcon(new MTMIcon("menu_link_external.gif", "http://", "pre"));
+      MTMIconList.addIcon(new MTMIcon("menu_link_pdf.gif", ".pdf", "post"));
+      
+      // Main menu.
+      var menu = null;
+      menu = new MTMenu();
+      menu.MTMAddItem(new MTMenuItem("Server Parameters "));
+      menu.MTMAddItem(new MTMenuItem("Server Operations"));
+      // menu.MTMAddItem(new MTMenuItem("Certification and Registration", "as_certif.html", "text", "alkaline_certif.gif"));
+      menu.MTMAddItem(new MTMenuItem("General and Help"));
+      
+      var ServerStatistics = null;
+      ServerStatistics = new MTMenu();
+      ServerStatistics.MTMAddItem(new MTMenuItem("Main Page", "main.html", "text", "alkaline_main.gif"));
+      ServerStatistics.MTMAddItem(new MTMenuItem("Performance Counters", "as_stats.html", "text", "alkaline_perf.gif"));
+      ServerStatistics.MTMAddItem(new MTMenuItem("Global Configuration", "as_globalcnf.html", "text", "alkaline_globalcnf.gif"));
+      ServerStatistics.MTMAddItem(new MTMenuItem("Server Configurations"));
+      
+      var ServerConfigurations = null;
+      ServerConfigurations = new MTMenu();
+
+      if (fAsMenuCnfLoaded) { 
+        ASBuildConfigurations(ServerConfigurations);
+      }
+      
+      var ServerOperations = null;
+      ServerOperations = new MTMenu();
+      ServerOperations.MTMAddItem(new MTMenuItem("Runtime Commands", "as_runtime.html", "text", "alkaline_runtime.gif"));
+      ServerOperations.MTMAddItem(new MTMenuItem("Add, Delete, Reindex", "as_urls.html", "text", "alkaline_tools.gif"));
+      
+      var ServerDocumentation = null;
+      ServerDocumentation = new MTMenu();
+      ServerDocumentation.MTMAddItem(new MTMenuItem("Vestris Inc. Homepage", "http://www.vestris.com/", "_new"));
+      ServerDocumentation.MTMAddItem(new MTMenuItem("Alkaline Powered Sites", "http://alkaline.vestris.com/sites.html", "_new", "alkaline_power.gif"));
+      ServerDocumentation.MTMAddItem(new MTMenuItem("Alkaline Documentation", "../docs/index.html", "text", "alkaline_doc.gif"));
+      ServerDocumentation.MTMAddItem(new MTMenuItem("User FAQ", "../faqs/index.html", "text", "alkaline_help.gif"));
+      ServerDocumentation.MTMAddItem(new MTMenuItem("Tech Support Forum", "http://www.vestris.com/agnes/split.html", "_new", "alkaline_help.gif"));
+      
+      ServerStatistics.items[3].MTMakeSubmenu(ServerConfigurations);
+      menu.items[0].MTMakeSubmenu(ServerStatistics);
+      menu.items[1].MTMakeSubmenu(ServerOperations);   
+      menu.items[2].MTMakeSubmenu(ServerDocumentation);      
+      
+      MTMStartMenu();
+      }
+    </script>
+ </body>
+</html>
+

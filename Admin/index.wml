@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN"
+"http://www.wapforum.org/DTD/wml_1.1.xml">
+
+<wml>
+
+  <card id="main" title="Alkaline WAP Server">   
+  <p>
+    <a href="as_stats.wml">Performance Counters</a><br/>
+    <a href="as_globalcnf.wml">Global Configuration</a><br/>
+    <a href="as_configs.wml">Server Configurations</a><br/>
+    <a href="as_configs_search.wml">Search</a>
+  </p>
+  </card>
+
+</wml>
+
+

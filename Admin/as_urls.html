@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" type="text/css"> 
+    <title>Alkaline Search Engine Administration - Add/Reindex Urls</title>
+  </head>
+
+  <script type="text/javascript" src="xparse.js"></script>
+  
+  <body bgcolor="#FFFFFF">
+    Alkaline Search Engine | Server Operations | <b>Add, Delete, Reindex Urls</b>
+    <hr size="1">
+    
+    <script>      
+      ASShowReponseXml("$serverresponsexml");
+
+      function ShowReindexDeleteSection(Header, Action, ArrayOfConfigurations) {
+         XParseShowTable(Header, "", XParsedObject);
+      
+         document.writeln("<blockquote><form action='" + document.URL + "' method=post>");
+         document.writeln("   <input name=action type=hidden value=" + Action + ">");
+         document.writeln("   <input name=url value=http://>");
+
+         document.writeln("<select name=alias>");
+         for (var i=0; i < ArrayOfConfigurations.length; i++) {
+            document.writeln("<option value=" + ArrayOfConfigurations[i] + ">" + ArrayOfConfigurations[i] + "</option>");
+         }
+         document.writeln("</select>");
+         document.writeln("   <input name=submit type=submit value='" + Header + "'>");
+         document.writeln("</form></blockquote>");
+      }
+ 
+      var ConfigXMLString = new String("$configxml");
+      var XParsedObject = new Array();
+      XParsedObject = Xparse(ConfigXMLString);
+ 
+      ConfigurationsAliases = XParseGetValue("/configurations/head/list", XParsedObject);
+      ArrayOfConfigurations = ConfigurationsAliases.split(" ");
+
+      ShowReindexDeleteSection("Add/Reindex Url", "indexadd", ArrayOfConfigurations);
+      ShowReindexDeleteSection("Delete Url", "indexdel", ArrayOfConfigurations);
+     
+    </script>
+    <hr>    
+  </body>
+</html>

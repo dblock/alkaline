@@ -1,0 +1,45 @@
+a: link, a: visited, a: active { text-decoration: none; font-size: 10pt; }
+a: hover { text-decoration: underline; font-size: 10pt; }
+h1 { font-size: 14pt; }
+h2 { font-size: 13pt; }
+h3 { font-size: 12pt; }
+h4 { font-size: 11pt; }
+form,body,a,b,td,table,tr,div,p {  font-family: Verdana, Arial, Helvetica, Swiss, Sans-Serif; font-size: 10pt; }
+ 
+pre.programlisting {
+        margin-left: 0pt;
+        margin-right: 0pt;
+        margin-top: 0pt;
+        margin-bottom: 0pt;
+        background-color: #E0E0E0;
+        padding: 1em;
+        text-align: left;
+        font-family: Verdana, Arial, Helvetica, Swiss, Sans-Serif;
+        font-size: 8pt;
+}
+
+DIV.TIP {
+        background-color: yellow;
+}
+
+DIV.NOTE {
+        background-color: yellow;
+	text-align: center;
+}
+
+DIV.CAUTION {
+        background-color: yellow;
+	text-align: center;
+}
+
+DIV.WARNING {
+        background-color: #DE0000;
+	text-align: center;
+}
+
+TT.LITERAL {
+        font-family: Verdana, Arial, Helvetica, Swiss, Sans-Serif; 
+        font-color: green;
+}
+
+ 

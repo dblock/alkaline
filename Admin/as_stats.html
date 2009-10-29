@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" type="text/css"> 
+    <title>Alkaline Search Engine Statistics - Counters</title>
+  </head>
+
+  <script type="text/javascript" src="xparse.js"></script>
+  
+  <body bgcolor="#FFFFFF">
+    Alkaline Search Engine | Server Parameters | <b>Performance Counters</b>
+    <hr size="1">
+    
+    <script>      
+      var XString = new String("$serverxml");
+      var XParsedObject = new Array();
+      XParsedObject = Xparse(XString);
+      
+      // server counters
+      var ServerCountersStr = new String();
+      ServerCountersStr += "Version:/server/release;";
+      ServerCountersStr += "Server Started:/server/started;";
+      ServerCountersStr += "Running Since:/server/running;";
+      ServerCountersStr += "Server Date:/server/date;";
+      ServerCountersStr += "System:/system/uts/descr;";
+      ServerCountersStr += "Node:/system/uts/node;";
+      XParseShowTable("Server Counters", ServerCountersStr, XParsedObject);
+      
+      // pool counters
+      var PoolCountersStr = new String();
+      PoolCountersStr += "Pool Started:/server/pool/started;";
+      PoolCountersStr += "Active Since:/server/pool/running;";
+      PoolCountersStr += "Max Threads:/server/pool/max;";
+      PoolCountersStr += "Total Threads:/server/pool/threads;";
+      PoolCountersStr += "Idle Threads:/server/pool/waiting;";
+      PoolCountersStr += "Pending Jobs:/server/pool/jobs;";
+      PoolCountersStr += "Rampup Threads:/server/pool/rampup;";
+      PoolCountersStr += "Max Queue Size:/server/pool/maxqueue;";
+      PoolCountersStr += "Max Idle Time:/server/pool/maxidle;";
+      
+      XParseShowTable("Pool Counters", PoolCountersStr, XParsedObject);
+      
+      var SearchCountersStr = new String();
+      SearchCountersStr += "Search Requests:/search/requests;";
+      SearchCountersStr += "Requests Per Minute:/search/rpm";
+      XParseShowTable("Search Counters", SearchCountersStr, XParsedObject);
+      
+      var SystemCountersStr = new String();
+      SystemCountersStr += "Kernel CPU Time:/system/cpu/system;";
+      SystemCountersStr += "User CPU Time:/system/cpu/user;";
+      SystemCountersStr += "Shared CPU Time:/system/cpu/time;";
+      SystemCountersStr += "CPU Load:/system/cpu/load;";
+      XParseShowTable("System Counters", SystemCountersStr, XParsedObject);      
+
+      var SystemSwapStr = new String();
+      SystemSwapStr += "Virtual View:/system/swap/virtual;";
+      SystemSwapStr += "Virtual Size:/system/swap/size;";
+      SystemSwapStr += "Memory Usage:/system/swap/used;";
+      SystemSwapStr += "Block Count:/system/swap/blocks;";
+      SystemSwapStr += "Fragmentation:/system/swap/frag;";
+      XParseShowTable("Virtual Memory Counters", SystemSwapStr, XParsedObject);      
+      
+    </script>    
+    <hr>    
+  </body>
+</html>

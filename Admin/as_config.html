@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+  <script type="text/javascript" src="xparse.js"></script>
+ 
+  <head>
+    <link rel="stylesheet" href="style.css" type="text/css"> 
+    <title>Alkaline Search Engine Statistics - Configuration</title>
+  </head>
+  
+  <body bgcolor="#FFFFFF">
+    Alkaline Search Engine | Server Parameters | Configurations | <b>
+      <script>
+        document.write(unescape(ASGetParamValue("name")));
+      </script>
+      
+    </b>
+      
+    <hr size="1">
+    
+    <script>
+      var ConfigXMLString = new String("$configxml");
+      var XParsedObject = new Array();
+      XParsedObject = Xparse(ConfigXMLString);
+      var ConfigName = ASGetParamValue("name"); 
+      var ConfigPath = "/configurations/config/" + ConfigName + "/";
+
+      XParseShowTable("Search " + unescape(ConfigName), "", XParsedObject); 
+      
+      document.writeln("<blockquote><form action=search.html?searchconfig=" + ConfigName + " method=post>");
+      document.writeln("  <input name=search type=text>");      
+      document.writeln("  <input name=submit type=submit value=Search>");      
+      document.writeln("<font size=1><br><input type=checkbox name=other value=opt:and> match all terms</input>");
+      document.writeln("<br><input type=checkbox name=other value=opt:case> case sensitive</input>");
+      document.writeln("<br><input type=checkbox name=other value=opt:whole> whole words only</input>");
+      document.writeln("<br><input type=checkbox name=hidesum value=on> hide summaries</input></font>");
+      document.writeln("</form></blockquote>");
+
+      XParseShowTable("Actions", "", XParsedObject); 
+
+      ASShowReponseXml("$serverresponsexml");      
+
+      document.writeln("<blockquote><form action='" + document.URL + "' method=post>");
+      document.writeln("  <input name=config type=hidden value='" + ConfigName + "'>");
+      document.writeln("  <input name=action type=hidden value=reloadindex>");
+      document.writeln("  <input name=submit value='Reload Index' type=submit>");
+      document.writeln("</form></blockquote>");
+
+      var ConfigTable = new String();
+      ConfigTable += "Virtual Configurations:" + ConfigPath + "vsize;";
+      ConfigTable += "Processed Files:" + ConfigPath + "processed/size;";
+      ConfigTable += "Modified files:" + ConfigPath + "processed/modified;";
+      ConfigTable += "Words:" + ConfigPath + "processed/words;";
+      ConfigTable += "Urls:" + ConfigPath + "processed/urls;";
+      ConfigTable += "Last Indexed Url:" + ConfigPath + "processed/last;"; 
+      
+      XParseShowTable("Configuration " + unescape(ConfigName), ConfigTable, XParsedObject); 
+
+      var VirtualConfigs = parseInt(XParseGetValue(ConfigPath + "vsize", XParsedObject));
+       
+      for (var Index = 0; Index < VirtualConfigs; Index++) {
+        XParseShowXMLTable("Virtual Configuration " + Index, ConfigPath + "cnf/vcnf-" + Index, XParsedObject);          
+      }
+
+      var IndexingTable = new String();
+      IndexingTable += "Max Threads:" + ConfigPath + "threads/max;";
+      IndexingTable += "Total Threads:" + ConfigPath + "threads/threads;";
+      IndexingTable += "Idle Threads:" + ConfigPath + "threads/waiting;";
+      IndexingTable += "Pending Jobs:" + ConfigPath + "threads/jobs;";
+      IndexingTable += "Rampup Threads:" + ConfigPath + "threads/rampup;";
+      IndexingTable += "Max Queue Size:" + ConfigPath + "threads/maxqueue;";
+      IndexingTable += "Max Idle Time:" + ConfigPath + "threads/maxidle;";
+      
+      XParseShowTable("Indexing Pool", IndexingTable, XParsedObject); 
+            
+      var SearchTable = new String();
+      SearchTable += "Cache Size:" + ConfigPath + "search/size;";
+      SearchTable += "Search Requests:" + ConfigPath + "search/requests;";
+      SearchTable += "Cache Hits:" + ConfigPath + "search/hits;";      
+      SearchTable += "Occupation:" + ConfigPath + "search/occupation;"; 
+      SearchTable += "Hit Rate:" + ConfigPath + "search/hitrate;";
+      SearchTable += "Requests per Minute:" + ConfigPath + "search/rpm;";
+      SearchTable += "Record Life:" + ConfigPath + "search/life;";
+      SearchTable += "L1 Cache:" + ConfigPath + "search/words/l1;";
+      SearchTable += "L2 Cache:" + ConfigPath + "search/words/l2;";
+      SearchTable += "L3 Cache:" + ConfigPath + "search/words/l3;";
+      SearchTable += "L4 Cache:" + ConfigPath + "search/words/l4;";
+
+      XParseShowTable("Search Cache", SearchTable, XParsedObject); 
+
+     
+    </script>
+
+    <hr>
+    
+  </body>
+</html>

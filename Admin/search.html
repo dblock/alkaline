@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+  <head>
+    <link rel="stylesheet" href="style.css" type="text/css"> 
+    <title>Alkaline Search Engine Search</title>
+    
+  </head>
+  
+  <body bgcolor="#FFFFFF">
+
+  Alkaline Search Engine | Server Parameters | Configurations | 
+  <!--SEARCH-GENERAL $post.searchconfig --> | <b>Search</b>
+
+  <hr size="1">
+      
+  <table width="100%">
+  <tr><td width=100% colspan="2" bgcolor=#EEEEEE><b>Search <!--SEARCH-GENERAL $post.searchconfig --></b></td></tr>
+  <tr><td width=100% colspan="2">
+    
+    <br>
+    
+  <!--SEARCH-GENERAL
+    
+     <blockquote>
+       <form action=search.html?searchconfig=$post.searchconfig method=post>
+          <input name=search type=text value="$query">
+          <input name=submit type=submit value=Search>
+            <font size="1">
+	    <br><input type="checkbox" name="other" value="opt:and" 
+	     £post.other|[HASopt:and]~[checked]
+             £post.search|[HASopt:and]~[checked]> match all terms</input>
+
+	    <br><input type="checkbox" name="other" value="opt:case"
+	     £post.other|[HASopt:case]~[checked]
+	     £post.search|[HASopt:case]~[checked]> case sensitive</input>		  
+
+	    <br>
+	    <input type="checkbox" name="other" value="opt:whole"
+	     £post.other|[HASopt:whole]~[checked]
+	     £post.search|[HASopt:whole]~[checked]> whole words only</input>
+
+	    <br><input type="checkbox" name="hidesum" value="on" 
+	     £post.hidesum~[checked]> hide summaries</input>
+	    </font>
+	    
+       </form>
+     </blockquote>
+     
+  -->
+  
+  </td></tr>
+  <tr><td width=100% colspan="2" bgcolor=#EEEEEE><b>Results</b></td></tr>
+  <tr><td>    
+  
+   <!--SEARCH-GENERAL <b>Alkaline</b> has found $total page(s) in $time seconds
+   <br><font size="1">database size: $size documents</font>
+	    £total|[NOT0]~[
+	  <br>		  
+	    sort results:
+	    [<a href="$sort.&searchconfig=$post.searchconfig&quant=$post.quant£post.hidesum~[&hidesum=$post.hidesum]">relevance</a>]
+	    [<a href="$sort.domain&searchconfig=$post.searchconfig£post.hidesum~[&hidesum=$post.hidesum]&quant=$post.quant">domain</a>]
+	    [<a href="$sort.idate&searchconfig=$post.searchconfig£post.hidesum~[&hidesum=$post.hidesum]&quant=$post.quant">date</a>]
+	    [<a href="$sort.title&searchconfig=$post.searchconfig£post.hidesum~[&hidesum=$post.hidesum]&quant=$post.quant">title</a>]
+	    [<a href="$sort.size&searchconfig=$post.searchconfig£post.hidesum~[&hidesum=$post.hidesum]&quant=$post.quant">size</a>]
+	    [<a href="$sort.url&searchconfig=$post.searchconfig£post.hidesum~[&hidesum=$post.hidesum]&quant=$post.quant">url</a>]<br>
+	    ]
+	    -->		  
+	        
+  </td><td align="right">
+  <!--SEARCH-NEXT-->
+  </td></tr>
+  <tr><td width="100%" colspan="2">
+  <!--SEARCH-RESULTS-->  
+  </td></tr>
+  <tr><td colspan="2" align="center"><!--SEARCH-NEXT--></td>
+  </table>
+  
+  <!--SET NEXT-INHERIT--£post.hidesum~[&hidesum=$post.hidesum]&searchconfig=$post.searchconfig-->  
+  <!--SET C-BEFORE--<b><font color="red">-->
+  <!--SET C-AFTER--</b></font>-->
+  <!--SET N-BEFORE--<b>-->
+  <!--SET N-AFTER--</b>-->
+
+  <!--SET MAP--
+   <dl><dt> 
+   <a href="$url" target="_new"><b>$title</b></a> £sort|[ISdomain]^[$quality%]
+  £post.hidesum|ISon^[
+   <dd>   
+   <font size="1">
+    $hlheader ... <br>
+    <font color="gray">
+     £sort|[ISdomain]~[group of $group.size result(s).]^[$size bytes; modified: $modif]
+    </font>
+   <br>url: <a href="$url" target="_new">$url</a>
+   </font>
+  ]
+  </dl>-->
+  
+  </body>
+</html>
